@@ -1,0 +1,20 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  name: sklearn-iris
+  namespace: default
+  annotations:
+    autoscaling.knative.dev/min-scale: "1"
+    autoscaling.knative.dev/max-scale: "3"
+    autoscaling.knative.dev/target: "1"
+spec:
+  predictor:
+    sklearn:
+      storageUri: "pvc://model-pvc/model"
+      resources:
+        requests:
+          cpu: "100m"
+          memory: "256Mi"
+        limits:
+          cpu: "500m"
+          memory: "512Mi"
